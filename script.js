@@ -12,7 +12,7 @@ let appState = {
 document.querySelectorAll('.sidebar-nav .nav-item').forEach(item => {
     item.addEventListener('click', (e) => {
         e.preventDefault();
-        
+
         // Remover activo de todos los items
         document.querySelectorAll('.sidebar-nav .nav-item').forEach(nav => nav.classList.remove('active'));
         // Agregar activo al seleccionado
@@ -40,14 +40,14 @@ document.querySelectorAll('.sidebar-nav .nav-item').forEach(item => {
 function openModal(tableId) {
     appState.currentTableId = tableId;
     const modal = document.getElementById('comanda-modal');
-    
+
     // Configurar info del modal
     document.getElementById('modal-title').textContent = `Comanda Mesa ${tableId}`;
-    
+
     // Hora actual
     const now = new Date();
     document.getElementById('modal-time').textContent = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
-    
+
     // Limpiar items
     document.getElementById('order-items-list').innerHTML = '';
     appState.activeOrderTotal = 0;
@@ -64,7 +64,7 @@ function closeModal() {
 
 function addDemoItem() {
     const itemsList = document.getElementById('order-items-list');
-    
+
     const itemHTML = `
         <div class="order-item-row">
             <div class="order-item-info">
@@ -77,7 +77,7 @@ function addDemoItem() {
             <div class="order-item-price">S/25.00</div>
         </div>
     `;
-    
+
     itemsList.insertAdjacentHTML('beforeend', itemHTML);
     appState.activeOrderTotal += 25.00;
     updateTotal();
@@ -87,9 +87,9 @@ function updateTotal() {
     document.getElementById('modal-total').textContent = `S/${appState.activeOrderTotal.toFixed(2)}`;
 }
 
-// ==========================================
+// =========================================
 // 3. INTERACCIÓN CON COCINA
-// ==========================================
+// =========================================
 function enviarACocina() {
     if (appState.activeOrderTotal === 0) {
         alert("Agrega al menos un producto a la comanda.");
@@ -99,7 +99,7 @@ function enviarACocina() {
     appState.ordersCount++;
     const orderId = appState.ordersCount;
     const tableId = appState.currentTableId;
-    
+
     // 1. Agregar Ticket a Cocina
     const kitchenBoard = document.getElementById('kitchen-board');
     const ticketHTML = `
@@ -158,7 +158,7 @@ function enviarACocina() {
     const comandasTbody = document.getElementById('comandas-tbody');
     const now = new Date();
     const timeString = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
-    
+
     const comandaRow = `
         <tr id="row-comanda-${orderId}">
             <td><strong>#${orderId}</strong></td>
@@ -202,7 +202,7 @@ function marcarListo(orderId, tableId) {
         // Encontrar barra y tag y actualizarlos
         mesaCard.querySelector('.status-bar').style.backgroundColor = 'var(--green)';
         mesaCard.querySelector('.status-bar').classList.remove('animate-pulse-bar');
-        
+
         const headerInfo = mesaCard.querySelector('.table-header');
         headerInfo.innerHTML = `
             <div class="table-number">M${tableId}</div>
