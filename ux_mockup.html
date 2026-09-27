@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restobar - Comanda Digital</title>
+    <!-- Hoja de estilos externa -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+
+<body>
+
+    <!-- Sidebar Navegación -->
+    <aside class="sidebar">
+        <div>
+            <!-- Logo -->
+            <div class="sidebar-logo">
+                <i class="ph-fill ph-cooking-pot"></i>
+                <span>Resto<span class="highlight">Bar</span></span>
+            </div>
+
+            <!-- Links -->
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-target="view-mesas">
+                    <i class="ph ph-squares-four"></i>
+                    <span>Mesas</span>
+                </a>
+                <a href="#" class="nav-item" data-target="view-comandas">
+                    <i class="ph ph-receipt"></i>
+                    <span>Comandas</span>
+                </a>
+                <a href="#" class="nav-item" data-target="view-cocina">
+                    <i class="ph ph-fire"></i>
+                    <span>Cocina</span>
+                    <span class="badge" id="cocina-badge">1</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Usuario -->
+        <div class="user-profile">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqCD8FbnTr8MhlO1Ji9q5bvomvLl2_uMdyRF9JoB6Lww&s"
+                alt="Mozo">
+            <div class="user-info">
+                <p class="name">Rodrigo N.</p>
+                <p class="role">Mozo</p>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Contenido Principal -->
+    <main class="main-content">
+        
+        <!-- VISTA: MESAS -->
+        <div id="view-mesas" class="view-section active">
+            <header class="top-header">
+                <div class="header-title">
+                    <h1>Estado de Mesas</h1>
+                    <p>Gestión de atención y comandas en tiempo real.</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-icon">
+                        <i class="ph ph-bell"></i>
+                    </button>
+                    <button class="btn-primary" onclick="openModal('3')">
+                        <i class="ph ph-plus"></i>
+                        Nueva Orden
+                    </button>
+                </div>
+            </header>
+
+            <div class="tables-container">
+                <div class="tables-grid" id="mesas-grid">
+                    
+                    <!-- Mesa Ocupada (Comiendo) -->
+                    <div class="table-card" id="mesa-1" onclick="openModal('1')">
+                        <div class="status-bar" style="background-color: var(--green);"></div>
+                        <div class="table-header">
+                            <div class="table-number">M1</div>
+                            <span class="status-tag eating">
+                                <span class="dot"></span> Comiendo
+                            </span>
+                        </div>
+                        <div class="table-info">
+                            <h3>Orden #4029</h3>
+                            <p><i class="ph ph-clock"></i> Hace 25 min</p>
+                        </div>
+                        <div class="table-footer">
+                            <span class="price">S/45.50</span>
+                            <span class="action-link">Ver detalle &rarr;</span>
+                        </div>
+                    </div>
+
+                    <!-- Mesa Esperando Comida -->
+                    <div class="table-card" id="mesa-2" onclick="openModal('2')">
+                        <div class="status-bar animate-pulse-bar" style="background-color: var(--amber);"></div>
+                        <div class="table-header">
+                            <div class="table-number">M2</div>
+                            <span class="status-tag waiting">
+                                <i class="ph ph-cooking-pot animate-bounce-icon"></i> En Cocina
+                            </span>
+                        </div>
+                        <div class="table-info">
+                            <h3>Orden #4030</h3>
+                            <p class="warning"><i class="ph ph-clock"></i> Hace 15 min (Demora)</p>
+                        </div>
+                        <div class="table-footer">
+                            <span class="price">S/32.00</span>
+                            <span class="action-link">Ver detalle &rarr;</span>
+                        </div>
+                    </div>
+
+                    <!-- Mesa Libre 3 -->
+                    <div class="table-card free" id="mesa-3" onclick="openModal('3')">
+                        <div class="free-icon">
+                            <i class="ph ph-plus"></i>
+                        </div>
+                        <h3>Mesa 3</h3>
+                        <span class="status-tag available">Disponible</span>
+                    </div>
+
+                    <!-- Mesa Libre 4 -->
+                    <div class="table-card free" id="mesa-4" onclick="openModal('4')">
+                        <div class="free-icon">
+                            <i class="ph ph-plus"></i>
+                        </div>
+                        <h3>Mesa 4</h3>
+                        <span class="status-tag available">Disponible</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- VISTA: COMANDAS -->
+        <div id="view-comandas" class="view-section" style="display: none;">
+            <header class="top-header">
+                <div class="header-title">
+                    <h1>Historial de Comandas</h1>
+                    <p>Todas las órdenes registradas en el turno actual.</p>
+                </div>
+            </header>
+            <div class="tables-container">
+                <div class="comandas-list">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Nro. Orden</th>
+                                <th>Mesa</th>
+                                <th>Hora</th>
+                                <th>Estado</th>
+                                <th>Total</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="comandas-tbody">
+                            <tr>
+                                <td><strong>#4030</strong></td>
+                                <td>Mesa 2</td>
+                                <td>20:30</td>
+                                <td><span class="status-tag waiting" style="width: fit-content;">En Cocina</span></td>
+                                <td>S/32.00</td>
+                                <td><button class="btn-text" onclick="openModal('2')">Ver</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>#4029</strong></td>
+                                <td>Mesa 1</td>
+                                <td>20:15</td>
+                                <td><span class="status-tag eating" style="width: fit-content;">Comiendo</span></td>
+                                <td>S/45.50</td>
+                                <td><button class="btn-text" onclick="openModal('1')">Ver</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- VISTA: COCINA -->
+        <div id="view-cocina" class="view-section" style="display: none;">
+            <header class="top-header cocina-header">
+                <div class="header-title">
+                    <h1>Panel de Cocina</h1>
+                    <p>Tickets pendientes de preparación.</p>
+                </div>
+            </header>
+            <div class="tables-container bg-darker">
+                <div class="kitchen-board" id="kitchen-board">
+                    
+                    <!-- Ticket de Cocina (Demo inicial) -->
+                    <div class="kitchen-ticket" id="ticket-4030">
+                        <div class="ticket-header">
+                            <div>
+                                <h2>Mesa 2</h2>
+                                <p>Orden #4030 - Rodrigo N.</p>
+                            </div>
+                            <div class="timer warning"><i class="ph ph-clock"></i> 15:00</div>
+                        </div>
+                        <div class="ticket-body">
+                            <ul class="ticket-items">
+                                <li>
+                                    <span class="qty">2</span>
+                                    <div class="item-desc">
+                                        <strong>Hamburguesa Clásica</strong>
+                                        <small>Sin cebolla, extra queso</small>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="qty">1</span>
+                                    <div class="item-desc">
+                                        <strong>Cerveza Artesanal IPA</strong>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="ticket-footer">
+                            <button class="btn-success" onclick="marcarListo('4030', '2')">
+                                <i class="ph ph-check-circle"></i> ¡Plato Listo!
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- MODAL DE COMANDA -->
+    <div class="modal-overlay" id="comanda-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h2 id="modal-title">Nueva Comanda</h2>
+                    <p>Mozo: Rodrigo N. • <span id="modal-time">--:--</span></p>
+                </div>
+                <button class="btn-close" onclick="closeModal()">
+                    <i class="ph ph-x"></i>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="order-items" id="order-items-list">
+                    <!-- Items dinámicos -->
+                </div>
+                
+                <div class="add-item-section">
+                    <button class="btn-dashed" onclick="addDemoItem()">
+                        <i class="ph ph-plus"></i> Agregar Lomo Saltado (S/25.00)
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <div class="total-row">
+                    <span>Total:</span>
+                    <span class="total-price" id="modal-total">S/0.00</span>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn-secondary" onclick="closeModal()">Cancelar</button>
+                    <button class="btn-primary" onclick="enviarACocina()">Enviar a Cocina</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script de Interactividad -->
+    <script src="script.js"></script>
+</body>
+
+</html>
